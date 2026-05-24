@@ -1,7 +1,7 @@
 repeat task.wait() until game:IsLoaded()
 
 -- =======================================================
--- PINATHUB | THE FORGE
+-- PINATHUB | THE FORGE (WINDUI v2)
 -- =======================================================
 
 -- ============================================
@@ -105,7 +105,7 @@ UIS.InputChanged:Connect(function(input)
 end)
 
 -- ============================================
--- LOAD WINDUI
+-- LOAD WINDUI v2
 -- ============================================
 local WindUI = loadstring(game:HttpGet('https://github.com/Footagesus/WindUI/releases/latest/download/main.lua'))()
 
@@ -113,11 +113,12 @@ local window = WindUI:CreateWindow({
     Title = "PinatHub",
     Author = "@viunze on tiktok",
     Folder = "pinathub",
-    Size = UDim2.fromOffset(600, 600),
-    Transparent = false,
+    Size = UDim2.fromOffset(500, 350),
+    Transparent = true,
     Theme = "Dark",
     IsOpenButtonEnabled = false,
-    User = {Enabled = true, Anonymous = true},
+    UserEnabled = true,
+    HasOutline = true,
     SideBarWidth = 150,
 })
 
@@ -862,7 +863,7 @@ miningSection:Paragraph({
 miningSection:Dropdown({
     Title = "Select Ore Type",
     Values = oreNames,
-    Default = "Rock",
+    Value = "Rock",
     Callback = function(value)
         selectedOre = value
     end
@@ -870,7 +871,6 @@ miningSection:Dropdown({
 
 miningSection:Toggle({
     Title = "Enable Auto Mining",
-    Type = "Checkbox",
     Value = false,
     Callback = function(state)
         autoMining = state
@@ -888,7 +888,8 @@ miningSection:Toggle({
 
 miningSection:Slider({
     Title = "Mining Range",
-    Value = {Min = 5, Max = 50, Default = 20, Decimals = 0},
+    Value = { Min = 5, Max = 50, Default = 20 },
+    Rounding = 0,
     Callback = function(value)
         miningRange = value
     end
@@ -906,7 +907,7 @@ sellSection:Paragraph({
 sellSection:Dropdown({
     Title = "Select Item to Sell",
     Values = sellItemNames,
-    Default = "All Items",
+    Value = "All Items",
     Callback = function(value)
         selectedSellItem = value
     end
@@ -914,7 +915,6 @@ sellSection:Dropdown({
 
 sellSection:Toggle({
     Title = "Enable Auto Sell",
-    Type = "Checkbox",
     Value = false,
     Callback = function(state)
         autoSell = state
@@ -962,7 +962,7 @@ forgeSectionUI:Paragraph({
 forgeSectionUI:Dropdown({
     Title = "Forge Item Type",
     Values = forgeItemTypes,
-    Default = "Weapon",
+    Value = "Weapon",
     Callback = function(value)
         forgeItemType = value
     end
@@ -970,7 +970,6 @@ forgeSectionUI:Dropdown({
 
 forgeSectionUI:Toggle({
     Title = "Auto Instant Melt",
-    Type = "Checkbox",
     Value = false,
     Callback = function(state)
         autoInstantMelt = state
@@ -979,7 +978,6 @@ forgeSectionUI:Toggle({
 
 forgeSectionUI:Toggle({
     Title = "Auto Instant Pour",
-    Type = "Checkbox",
     Value = false,
     Callback = function(state)
         autoInstantPour = state
@@ -988,7 +986,6 @@ forgeSectionUI:Toggle({
 
 forgeSectionUI:Toggle({
     Title = "Auto Perfect Hammer (100%)",
-    Type = "Checkbox",
     Value = true,
     Callback = function(state)
         autoPerfectHammer = state
@@ -1004,7 +1001,6 @@ forgeSectionUI:Button({
 
 forgeSectionUI:Toggle({
     Title = "Enable Auto Forge",
-    Type = "Checkbox",
     Value = false,
     Callback = function(state)
         autoForge = state
@@ -1030,7 +1026,7 @@ combatSection:Paragraph({
 combatSection:Dropdown({
     Title = "Select NPC Type",
     Values = npcNames,
-    Default = "Delver Zombie",
+    Value = "Delver Zombie",
     Callback = function(value)
         selectedNPC = value
     end
@@ -1038,7 +1034,6 @@ combatSection:Dropdown({
 
 combatSection:Toggle({
     Title = "Enable Auto Kill",
-    Type = "Checkbox",
     Value = false,
     Callback = function(state)
         autoKillZombie = state
@@ -1079,7 +1074,6 @@ antiAFKSection:Paragraph({
 
 antiAFKSection:Toggle({
     Title = "Enable Anti AFK",
-    Type = "Checkbox",
     Value = false,
     Callback = function(state)
         antiAFKEnabled = state
@@ -1140,7 +1134,8 @@ local movementSection = tabs.settings:Section({Title = "Movement"})
 local walkSpeedValue = 16
 movementSection:Slider({
     Title = "Walk Speed (16-250)",
-    Value = {Min = 16, Max = 250, Default = 16, Decimals = 0},
+    Value = { Min = 16, Max = 250, Default = 16 },
+    Rounding = 0,
     Callback = function(value)
         walkSpeedValue = value
         local char = getCharacter()
@@ -1154,7 +1149,8 @@ movementSection:Slider({
 local jumpPowerValue = 50
 movementSection:Slider({
     Title = "Jump Power (0-500)",
-    Value = {Min = 0, Max = 500, Default = 50, Decimals = 0},
+    Value = { Min = 0, Max = 500, Default = 50 },
+    Rounding = 0,
     Callback = function(value)
         jumpPowerValue = value
         local char = getCharacter()
@@ -1171,7 +1167,6 @@ movementSection:Slider({
 local infiniteJumpEnabled = false
 movementSection:Toggle({
     Title = "Infinite Jump",
-    Type = "Checkbox",
     Value = false,
     Callback = function(value)
         infiniteJumpEnabled = value
@@ -1200,9 +1195,10 @@ movementSection:Button({
 
 movementSection:Divider()
 
-local flySpeedSlider = movementSection:Slider({
+movementSection:Slider({
     Title = "Fly/Tween Speed",
-    Value = {Min = 20, Max = 200, Default = 50, Decimals = 0},
+    Value = { Min = 20, Max = 200, Default = 50 },
+    Rounding = 0,
     Callback = function(value)
         flySpeed = value
     end
@@ -1216,7 +1212,6 @@ local serverSection = tabs.settings:Section({Title = "Server"})
 local antiAFKServer = false
 serverSection:Toggle({
     Title = "Anti-AFK (Server)",
-    Type = "Checkbox",
     Value = false,
     Callback = function(state)
         antiAFKServer = state
