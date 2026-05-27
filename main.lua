@@ -1280,7 +1280,7 @@ communitySection:Button({
     Title = "WhatsApp Group",
     Callback = function()
         if set_clipboard then
-            set_clipboard("https://chat.whatsapp.com/I8hG44FLgrRAwQcS3lvEft")
+            set_clipboard("https://chat.whatsapp.com/Cxr7poqqID6Ha6C2MfFOMU")
             window:Notify("Copied!", "WhatsApp link copied!", 2)
         end
     end
